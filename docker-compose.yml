@@ -1,0 +1,135 @@
+version: '3.8'
+
+services:
+  parada-db:
+    image: mysql:8.3.0
+    container_name: parada-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: parada
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3309:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  usuario-db:
+    image: mysql:8.3.0
+    container_name: usuario-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usuario
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3310:3306"
+    networks:
+      - app-network
+    volumes:
+      - usuario_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cuenta-db:
+    image: mysql:8.3.0
+    container_name: cuenta-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cuenta
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3311:3306"
+    networks:
+      - app-network
+    volumes:
+      - cuenta_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  monopatin-db:
+    image: mongo:latest
+    container_name: monopatin-db
+    ports:
+      - "27018:27017"
+    networks:
+      - app-network
+    environment:
+      MONGO_INITDB_DATABASE: monopatin_db
+
+  viaje-db:
+    image: mongo:latest
+    container_name: viaje-db
+    ports:
+      - "27015:27017"
+    networks:
+      - app-network
+    environment:
+      MONGO_INITDB_DATABASE: viaje_db
+
+  tarifa-db:
+    image: mysql:8.3.0
+    container_name: tarifa-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tarifa_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3313:3306"
+    networks:
+      - app-network
+    volumes:
+      - tarifa_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  factura-db:
+    image: mysql:8.3.0
+    container_name: factura-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: factura_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3314:3306"
+    networks:
+      - app-network
+    volumes:
+      - factura_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "-puser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongo_data:
+  usuario_data:
+  cuenta_data:
+  viaje_data:
+  tarifa_data:
+  factura_data:
