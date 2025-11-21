@@ -39,10 +39,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Usuario> register(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> register(@RequestBody Usuario usuario) {
+        // 1. Validar si ya existe el email
+        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            return ResponseEntity.badRequest().body("El email ya está registrado");
+        }
+
+        // 2. Si no existe, proceder con el registro
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        // Por defecto USER si no se especifica
         if (usuario.getRol() == null) usuario.setRol("USER");
+
         return ResponseEntity.ok(usuarioRepository.save(usuario));
     }
 }

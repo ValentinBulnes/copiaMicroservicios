@@ -6,7 +6,7 @@ spring:
     name: gateway
 
   cloud:
-    # Deshabilita el chequeo de versi�n de Spring Boot vs. Spring Cloud
+    # Deshabilita el chequeo de versin de Spring Boot vs. Spring Cloud
     compatibility-verifier:
       enabled: false
 
@@ -16,7 +16,7 @@ spring:
         - id: usuario-ms
           uri: http://localhost:8001
           predicates:
-            - Path=/usuarios/**, /cuentas/**
+            - Path=/usuarios/**, /cuentas/**, /auth/**
           filters:
             - AuthenticationFilter
 
