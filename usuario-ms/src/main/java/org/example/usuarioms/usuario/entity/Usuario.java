@@ -36,6 +36,12 @@ public class Usuario {
     @Column
     private Double longitud;
 
+    @Column
+    private String password;
+
+    @Column
+    private String rol;
+
     @ManyToMany(mappedBy = "usuarios")
     @JsonIgnore
     private List<Cuenta> cuentas;
